@@ -15,3 +15,11 @@
 - 数据接口
 - 数据库连接
 - session状态
+
+#### nextjs集成antd
+nextjs不支持css文件引入
+解决： 
+> yarn add @zeit/next-css
+antd 按需加载
+> yarn add antd babel-plugin-import
+配置.babelrc文件
