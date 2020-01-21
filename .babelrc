@@ -6,11 +6,9 @@
             {
                 "libraryName": "antd"
             }
-
         ],
         [
             "styled-components", { "ssr": true }
         ]
     ]
-
 }

@@ -1,5 +1,7 @@
 import App, { Container } from 'next/app'
+import { Provider } from 'react-redux'
 
+import Layout from '../components/Layout'
 import 'antd/dist/antd.css'
 
 class MyApp extends App {
@@ -19,7 +21,9 @@ class MyApp extends App {
         const { Component, pageProps } = this.props
         return (
             <Container>
-                <Component {...pageProps}/>
+                <Layout>
+                    <Component {...pageProps}/>
+                </Layout>
             </Container>
         )
     }

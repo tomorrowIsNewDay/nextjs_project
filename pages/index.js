@@ -5,7 +5,7 @@ import { Button } from 'antd'
 
 export default ()=> (
     <>
-        <span>home page<Button>哈哈</Button></span>
+       
         <style jsx>
             {
               `

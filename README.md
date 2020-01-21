@@ -84,3 +84,21 @@ Mou.default.xx
 2. 异步组件
 import dynamic from 'next/dynamic'
 const Comp = dynamic(import('xx'))
+
+**hooks**
+- useState 与 useReducer
+useReducer 是 useState的 底层
+- useLayoutEffect 与 useEffect
+useLayoutEffect在dom渲染前执行，useEffect在dom渲染后执行
+- useContext
+- useRef
+**优化， 要配合 memo使用**
+- useMemo
+- useCallback
+**闭包陷阱**
+当遇到延时异步的操作，使用的是触发时的状态，不一定时当前最新的状态
+
+**规避**
+ 状态挂在ref上
+ const ref = useRef() //ref会保持不变
+ref.current = xx
