@@ -52,3 +52,10 @@ bug: 刷新会报404
 解决：在服务端解决
 
 **Router 钩子**
+// histroy
+routerChangeStart
+beforeHistroyChange
+routerChangeComplete
+// hash
+hashChangeStart
+hashChangeComplete
