@@ -20,6 +20,10 @@
 nextjs不支持css文件引入
 解决： 
 > yarn add @zeit/next-css
+或者
+css in js
+<style jsx></style>
+
 antd 按需加载
 > yarn add antd babel-plugin-import
 配置.babelrc文件
@@ -59,3 +63,24 @@ routerChangeComplete
 // hash
 hashChangeStart
 hashChangeComplete
+
+**nextjs 数据获取**
+只有在page下的组件有效
+Com.getInitalProps = (ctx)=>{
+    return {}
+}
+
+**自定义app / document**
+pages/_app.js
+pages/_document.js //服务端渲染时执行
+
+**按需加载**
+LazyLoading
+1. 异步模块
+一般在getInitialPorps中
+const Mou = await import('xx')
+Mou.default.xx
+
+2. 异步组件
+import dynamic from 'next/dynamic'
+const Comp = dynamic(import('xx'))

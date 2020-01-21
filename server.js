@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const next = require('next')
-const Router = require('next/router')
+const Router = require('koa-router')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -9,7 +9,7 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(()=>{
     const server = new Koa()
-    const router = new Router()
+    const router = Router()
 
     // 处理 路由映射 浏览器刷新 导致 404的bug
     router.get('a/:id', async(ctx) => {

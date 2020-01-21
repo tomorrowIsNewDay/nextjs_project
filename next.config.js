@@ -4,4 +4,11 @@ if(typeof require !== 'undefined') {
     require.extensions['.css'] = file => {}
 }
 
-module.exports = withCss({})
+const configs = {
+    disDir: 'dist',
+    pageExtensions: ['jsx', 'js']
+}
+
+module.exports = withCss({
+    ...configs
+})
