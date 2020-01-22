@@ -2,10 +2,15 @@
 // import React from 'react' 
 
 import { Button } from 'antd' 
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
+
+// console.log('publicRuntimeConfig:::', publicRuntimeConfig)
 
 export default ()=> (
-    <>
-       sdjd
+    <>  
+       <a href={publicRuntimeConfig.OAUTH_URL}>login</a>
         <style jsx>
             {
               `
