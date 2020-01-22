@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 
+import Container from './Container'
 import Link from 'next/link'
 import { Layout, Icon, Input, Avatar } from 'antd'
 
@@ -29,7 +30,7 @@ export default ({ children }) => {
     return (
         <Layout>
             <Header>
-                <div className="header-inner">
+                <Container renderer={<div className="header-inner"/>}>
                     <div className="header-left">
                         <div className="logo">
                             <Icon type='github' style={githubIconStyle}/>
@@ -48,9 +49,11 @@ export default ({ children }) => {
                             <Avatar size={40} icon='user' />
                         </div>
                     </div>
-                </div>
+                </Container>
             </Header>
-            <Content> {children} </Content>
+            <Content> 
+                <Container> {children} </Container>
+            </Content>
             <Footer style={footerStyle}>
                 Develop by lee_ming@<a href='mailto:602387427@qq.com'>602387427@qq.com</a>
             </Footer>
@@ -74,6 +77,10 @@ export default ({ children }) => {
                     }
                     .ant-layout{
                         height: 100%
+                    }
+                    .ant-layout-header{
+                        padding-left: 0;
+                        padding-right: 0
                     }
                 `}
             </style>
