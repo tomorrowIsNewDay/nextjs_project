@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import ReduxThunk from 'redux-chunk'
+import thunk from 'redux-thunk'
+
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const useInitialState = {}
@@ -15,16 +16,13 @@ const allReducers = combineReducers({
     user: userReducers
 })
 
-// const reduxDevtools = window.devToolsExtension ? window.devToolsExtension() : f=>f
-
 export default function initialStore(state) {
+    console.log('createStore:::', typeof createStore)
     const store = createStore(
         allReducers,
         Object.assign({}, {user: useInitialState}, state),
-        composeWithDevTools(applyMiddleware(ReduxThunk))
+        composeWithDevTools(applyMiddleware(thunk))
     )
+    console.log('store:::', store)
     return store
 }
-
-
-

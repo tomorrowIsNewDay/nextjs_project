@@ -69,6 +69,7 @@ hashChangeComplete
 Com.getInitalProps = (ctx)=>{
     return {}
 }
+返回的数据，会序列化为字符串，存在html中，客户端可以从html中获取数据
 
 **自定义app / document**
 pages/_app.js
