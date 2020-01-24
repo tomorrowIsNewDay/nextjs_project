@@ -17,12 +17,11 @@ const allReducers = combineReducers({
 })
 
 export default function initialStore(state) {
-    console.log('createStore:::', typeof createStore)
     const store = createStore(
         allReducers,
         Object.assign({}, {user: useInitialState}, state),
         composeWithDevTools(applyMiddleware(thunk))
     )
-    console.log('store:::', store)
+    // console.log('store:::', store)
     return store
 }

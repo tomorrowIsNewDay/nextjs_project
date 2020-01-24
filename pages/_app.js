@@ -10,6 +10,7 @@ class MyApp extends App {
     // 数据获取
     static async getInitialProps(ctx) {
         const { Component } = ctx
+        console.info('MyApp app:::', Component)
         let pageProps
         if(Component.getInitialProps){
             pageProps = await Component.getInitialProps(ctx)
@@ -25,11 +26,11 @@ class MyApp extends App {
 
         return ( 
             <Container>
-                <Layout>
-                    <Provider store={reduxStore}>
+                <Provider store={reduxStore}>
+                    <Layout>
                         <Component {...pageProps}/>
-                    </Provider>
-                </Layout>
+                    </Layout>    
+                </Provider> 
             </Container>
         )
     }

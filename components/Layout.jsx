@@ -2,7 +2,11 @@ import { useState, useCallback } from 'react'
 
 import Container from './Container'
 import Link from 'next/link'
-import { Layout, Icon, Input, Avatar } from 'antd'
+import { Layout, Icon, Input, Avatar, Tooltip, Dropdown, Menu } from 'antd'
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
+
+import { connect } from 'react-redux'
 
 const { Header, Content, Footer } = Layout
 
@@ -17,7 +21,7 @@ const footerStyle = {
     textAlign: 'center'
 }
 
-export default ({ children }) => {
+function MyLayout({ children, user }) {
 
     const [search, setSearch] = useState('')
 
@@ -26,6 +30,16 @@ export default ({ children }) => {
     }, [setSearch])
 
     const handleSearch = useCallback(() => {}, [])
+
+    const userDropDown = (
+        <Menu>
+            <Menu.Item>
+                <a href="javascript:void(0)">
+                    登出
+                </a>
+            </Menu.Item>
+        </Menu>
+    )
 
     return (
         <Layout>
@@ -46,7 +60,22 @@ export default ({ children }) => {
                     </div>
                     <div className="header-right">
                         <div className="user">
-                            <Avatar size={40} icon='user' />
+                            {
+                                user && user.id ? (
+                                 <Dropdown overlay={userDropDown}>
+                                     <a href='/'>
+                                        <Avatar size={40} src={user.avatar_url} />
+                                    </a>
+                                 </Dropdown>  
+                                ) : 
+                                (
+                                <Tooltip title="点击进行登录">
+                                    <a href={publicRuntimeConfig.OAUTH_URL}>
+                                        <Avatar size={40} icon='user' />
+                                    </a>
+                                </Tooltip>
+                                )
+                            }
                         </div>
                     </div>
                 </Container>
@@ -87,3 +116,11 @@ export default ({ children }) => {
         </Layout>
     )
 }
+
+export default connect(
+    function mapState(state) {
+        return {
+            user: state.user
+        }
+    }
+)(MyLayout)
