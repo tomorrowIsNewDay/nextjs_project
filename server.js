@@ -43,18 +43,7 @@ app.prepare().then(()=>{
     //     // ctx.session
     // })
 
-    server.use(async (ctx, next) => {
-        // if(!ctx.session.user){
-        //     ctx.session.user = {
-        //         name: 'leem',
-        //         age: 23
-        //     }
-        // }else{
-            // console.log('session is::', ctx.session)
-        // }
-
-        await next()
-    })
+    
 
     // 处理 路由映射 浏览器刷新 导致 404的bug
     router.get('a/:id', async(ctx) => {
@@ -65,7 +54,7 @@ app.prepare().then(()=>{
         })
         ctx.respond = false //设置false,手动设置ctx.body,true 会自动默认相应
     })
-
+    // 获取用户信息
     router.get('/api/user/info', async(ctx) => {
        const user = ctx.session.userInfo
        if(!user){
@@ -75,14 +64,6 @@ app.prepare().then(()=>{
            ctx.body = user
            ctx.set('Content-Type', 'application/json')
        }
-    })
-
-    router.get('/set/user', async(ctx) => {
-        ctx.session.user = {
-            name: 'leem',
-            age: 23
-        }
-        ctx.body = 'set session success'
     })
 
     server.use(router.routes())

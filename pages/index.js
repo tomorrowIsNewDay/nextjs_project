@@ -6,19 +6,31 @@ import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
+import { useEffect } from "react"
+import axios from 'axios'
+
 // console.log('publicRuntimeConfig:::', publicRuntimeConfig)
 
-export default ()=> (
-    <>  
-       <a href={publicRuntimeConfig.OAUTH_URL}>login</a>
-        <style jsx>
-            {
-              `
-              span{
-                  color: red
-              }
-              `
-            }
-        </style>
-    </>
-)
+export default ()=> {
+
+    useEffect( () => {
+        axios.get('/api/user/info').then(resp => {
+            console.log(resp)
+        })
+    }, [] )
+
+    return (
+            <>  
+                <a href={publicRuntimeConfig.OAUTH_URL}>login</a>
+                <style jsx>
+                    {
+                    `
+                    span{
+                        color: red
+                    }
+                    `
+                    }
+                </style>
+            </>
+        )
+}
