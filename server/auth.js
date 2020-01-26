@@ -43,13 +43,38 @@ module.exports = (server) => {
                 // console.log(userInfoResp, "userinforesp:::")
                 // 用户信息写入session
                 ctx.session.userInfo = userInfoResp.data
-                ctx.redirect('/')
-
+                ctx.redirect(ctx.session && ctx.session.urlBeforeOAuth || '/')
+                ctx.session.urlBeforeOAuth = ''
             }else{
                 const errorMsg = result.data && result.data.error
                 ctx.body = `request token failed${errorMsg}`
             }
 
+        }else{
+            await next()
+        }
+    })
+
+    server.use(async (ctx, next) => {
+        const path = ctx.path
+        const method = ctx.method
+        if( path === '/logout' && method === 'POST' ) {
+            ctx.session = null //清空session
+            ctx.body = 'logout success'
+        }else{
+            await next()
+        }
+    })
+
+    // 在登录前，预存当前路由，登录成功后跳转当前路由
+    server.use(async (ctx, next) => {
+        const path = ctx.path
+        const method = ctx.method
+        if( path === '/prepare-auth' && method === 'GET' ) {
+            const { url } = ctx.query
+            ctx.session.urlBeforeOAuth = url
+            // ctx.body = 'ready'
+            ctx.redirect(config.OAUTH_URL)
         }else{
             await next()
         }

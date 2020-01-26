@@ -1,9 +1,15 @@
+const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize'
+const SCOPE = 'user'
+const client_id = '7799f3612b93e2f2097f'
+
 module.exports = {
     github: {
-        client_id: '7799f3612b93e2f2097f',
+        client_id,
         client_secret: 'f48c6f3ce71c0983dea21a9b39baca72ec6b5af7',
         request_toke_url: 'https://github.com/login/oauth/access_token'
-    }
+    },
+    OAUTH_URL: `${GITHUB_OAUTH_URL}?client_id=${client_id}&scope=${SCOPE}`,
+    GITHUB_OAUTH_URL
 }
 
 //跳转授权页，并携带相应信息，client_id 一定要有，scope代表授权的范围，repo代表仓库信息，user代表用户信息

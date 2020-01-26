@@ -7,15 +7,12 @@ if(typeof require !== 'undefined') {
     require.extensions['.css'] = file => {}
 }
 
-const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize'
-const SCOPE = 'user'
-
 const configs = {
     disDir: 'dist',
     pageExtensions: ['jsx', 'js'],
     publicRuntimeConfig: {
-        GITHUB_OAUTH_URL,
-        OAUTH_URL: `${GITHUB_OAUTH_URL}?client_id=${config.github.client_id}&scope=${SCOPE}`
+        GITHUB_OAUTH_URL: config.GITHUB_OAUTH_URL,
+        OAUTH_URL: config.OAUTH_URL
     }
 }
 
