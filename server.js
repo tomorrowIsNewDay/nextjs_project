@@ -2,7 +2,10 @@ const Koa = require('koa')
 const next = require('next')
 const Router = require('koa-router')
 const session = require('koa-session')
+const koaBody = require('koa-body')
 const auth = require('./server/auth') 
+
+const api = require('./server/api')
 
 //** redis */
 const RedisSessionStore = require('./server/session-store')
@@ -24,6 +27,8 @@ app.prepare().then(()=>{
     const router = new Router()
 
     server.keys = ['leemd mansdyd you man nin']
+    server.use(koaBody())
+
     const SEESION_CONFIG = {
         key: 'jid',
         // maxAge: 20 * 1000,
@@ -34,6 +39,7 @@ app.prepare().then(()=>{
 
     //配置处理 github oauth 登录，获取token
     auth(server)
+    api(server)
 
     // server.use(async (ctx, next) => {
     //     if(ctx.cookies.get('jid')){

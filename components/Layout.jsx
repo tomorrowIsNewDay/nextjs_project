@@ -26,13 +26,17 @@ const footerStyle = {
 
 function MyLayout({ children, user, logout, router }) {
 
-    const [search, setSearch] = useState('')
+    const urlQuery = router.query && router.query.query
+    //页面刷新， 搜索框中显示路由中的query
+    const [search, setSearch] = useState(urlQuery || '')
 
     const handleChange = useCallback((event) => {
         setSearch(event.target.value)
     }, [setSearch])
 
-    const handleSearch = useCallback(() => {}, [])
+    const handleSearch = useCallback(() => {
+        router.push(`/search?query=${search}`)
+    }, [search])
 
     // 登出
     const handleLogout = useCallback(() => {
@@ -69,7 +73,9 @@ function MyLayout({ children, user, logout, router }) {
                 <Container renderer={<div className="header-inner"/>}>
                     <div className="header-left">
                         <div className="logo">
-                            <Icon type='github' style={githubIconStyle}/>
+                            <Link href='/'>
+                                <Icon type='github' style={githubIconStyle}/>
+                            </Link>
                         </div>
                         <div>
                             <Input.Search 
@@ -130,11 +136,14 @@ function MyLayout({ children, user, logout, router }) {
                         height: 100%
                     }
                     .ant-layout{
-                        height: 100%
+                        min-height: 100%
                     }
                     .ant-layout-header{
                         padding-left: 0;
                         padding-right: 0
+                    }
+                    .ant-layout-content{
+                        background: #fff
                     }
                 `}
             </style>
