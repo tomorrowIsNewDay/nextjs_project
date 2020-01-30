@@ -64,12 +64,12 @@ class MyApp extends App {
                 <Provider store={reduxStore}>
                     { this.state.loading ? <PageLoading /> : null }
                     <Layout>
-                        <Link href='/'>
+                        {/* <Link href='/'>
                             <a>index</a>
                         </Link>
                         <Link href='/detail'>
                             <a>detail</a>
-                        </Link>
+                        </Link> */}
                         <Component {...pageProps}/>
                     </Layout>    
                 </Provider> 
