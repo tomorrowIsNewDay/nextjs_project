@@ -98,7 +98,7 @@ function Index ({ userRepos, userStaredRepos, user, router }) {
                     width: 200px;
                     margin-right: 40px;
                     flex-shrink: 0;
-                    dispaly: flex;
+                    display: flex;
                     flex-direction: column;
                 }
                 .login{
