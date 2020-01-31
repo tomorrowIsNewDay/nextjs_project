@@ -5,21 +5,49 @@ import getConfig from 'next/config'
 const api = require('../lib/api')
 
 import { connect } from 'react-redux'
+import Router, { withRouter } from 'next/router'
+import LRU from 'lru-cache'
+
+// 设置缓存 时效
+// 10分钟内 未使用会被删除,指的是没有使用cache.get()调用
+// 底层是使用 settimeout，定时器
+const cache = new LRU({
+    maxAge: 1000 * 60 * 10
+})
 
 const { publicRuntimeConfig } = getConfig()
+// 本地缓存，避免tab 切换 重新获取数据
+// 模块全局作用域，服务端渲染应避免
+let cachedUserRepos, cachedUserStaredRepos
+const isServer = typeof window === 'undefined'
 
 import { useEffect } from "react"
 import axios from 'axios'
-import { Button, Icon } from 'antd'
+import { Button, Icon, Tabs } from 'antd'
+import Repo from '../components/Repo'
 
-// console.log('publicRuntimeConfig:::', publicRuntimeConfig)
-
-function Index ({ userRepos, userStaredRepos, user }) {
+function Index ({ userRepos, userStaredRepos, user, router }) {
     console.log('userRepos:::', userRepos, userStaredRepos)
 
-    // useEffect(() => {
-    //     axios.post('/github/test', {test: 123})
-    // })
+    const tabKey = router.query.key || '1'
+
+    const handleTabChange = (activeKey) => {
+        Router.push(`/?key=${activeKey}`)
+    }
+    useEffect(() => {
+        if(!isServer) {
+            // cache
+            if(userRepos){
+                cache.set('userRepos', userRepos)
+            }
+            if(userStaredRepos) {
+                cache.set('userStaredRepos', userStaredRepos)
+            }
+            
+            // cachedUserRepos = userRepos
+            // cachedUserStaredRepos = userStaredRepos
+        } 
+    }, [userRepos, userStaredRepos])
     if(!user || !user.id) {
         return <div className='root'>
             <p>亲，您还没有登录哦～</p>
@@ -48,7 +76,17 @@ function Index ({ userRepos, userStaredRepos, user }) {
                 </p>
             </div>
             <div className='user-repos'>
-                <p>user-repos</p>
+                <Tabs 
+                    defaultActiveKey={tabKey} 
+                    onChange={handleTabChange}
+                    animated={false}>
+                    <Tabs.TabPane tab='你的仓库' key='1'>
+                    { userRepos && userRepos.map(repo => <Repo repo={repo} key={repo.id}/>) }  
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab='你关注的仓库' key='2'>
+                    { userStaredRepos && userStaredRepos.map(repo => <Repo repo={repo} key={repo.id}/>) }  
+                    </Tabs.TabPane>
+                </Tabs>
             </div>
             <style jsx>{`
                 .root{
@@ -80,6 +118,9 @@ function Index ({ userRepos, userStaredRepos, user }) {
                     width: 100%;
                     border-radius: 100%
                 }
+                .user-repos {
+                    flex-grow: 1;
+                }
             `}</style>
         </div>
     )
@@ -89,8 +130,8 @@ Index.getInitialProps = async({ctx, reduxStore}) => {
     
     // const result = await api.request({
     //     url: '/search/repositories?q=react'
-    // }, ctx.req, ctx.res)       
-    
+    // }, ctx.req, ctx.res)  
+
     const user = reduxStore.getState().user
     if(!user || !user.id){
         return {
@@ -98,6 +139,15 @@ Index.getInitialProps = async({ctx, reduxStore}) => {
         }
     }
 
+    if (!isServer) {
+        if(cache.get('userRepos') && cache.get('userStaredRepos')) {
+            return {
+                userRepos: cache.get('userRepos'),
+                userStaredRepos: cache.get('userStaredRepos')
+            }
+        }
+    }
+    
     
     const userRepos = await api.request({
         url: '/user/repos'
@@ -106,8 +156,7 @@ Index.getInitialProps = async({ctx, reduxStore}) => {
     const userStaredRepos = await api.request({
         url: '/user/starred'
     }, ctx.req, ctx.res)  
-    
-    
+   
     return {
         isLogin: true,
         userRepos: userRepos.data,
@@ -115,13 +164,15 @@ Index.getInitialProps = async({ctx, reduxStore}) => {
     }                    
 }
 
-export default connect(
+export default withRouter(connect(
     function mapState(state){
         return {
             user: state.user
         }
     }
-)(Index)
+)(Index))
+
+
 // export default ()=> {
 
 //     useEffect( () => {
