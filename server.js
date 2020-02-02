@@ -7,6 +7,11 @@ const auth = require('./server/auth')
 
 const api = require('./server/api')
 
+const atob = require('atob')
+//nodejs全局增加atob方法，服务端客户端共享
+// atob: 转义baseb4代码
+global.atob = atob
+
 //** redis */
 const RedisSessionStore = require('./server/session-store')
 const Redis = require('ioredis')

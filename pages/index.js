@@ -26,6 +26,8 @@ import axios from 'axios'
 import { Button, Icon, Tabs } from 'antd'
 import Repo from '../components/Repo'
 
+import { cacheArray } from '../lib/repo-basic-cache'
+
 function Index ({ userRepos, userStaredRepos, user, router }) {
     console.log('userRepos:::', userRepos, userStaredRepos)
 
@@ -48,6 +50,14 @@ function Index ({ userRepos, userStaredRepos, user, router }) {
             // cachedUserStaredRepos = userStaredRepos
         } 
     }, [userRepos, userStaredRepos])
+
+    useEffect( () => {
+        if(!isServer) {
+            cacheArray(userRepos)
+            cacheArray(userStaredRepos)
+        }
+    })
+
     if(!user || !user.id) {
         return <div className='root'>
             <p>亲，您还没有登录哦～</p>

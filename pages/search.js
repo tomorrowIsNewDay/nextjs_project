@@ -4,8 +4,12 @@ import Link from 'next/link'
 import Router from 'next/router'
 const api = require('../lib/api')
 
-import { useCallback, memo, isValidElement } from 'react'
+import { useEffect, memo, isValidElement } from 'react'
 import Repo from '../components/Repo'
+
+import { cacheArray } from '../lib/repo-basic-cache'
+
+const isServer = typeof window === 'undefind'
 
 const LANGUAGE = ['JavaScript', 'HTML', 'CSS', 'TypeScript', 'Java', 'Rust']
 const SORT_TYPES = [{
@@ -80,6 +84,10 @@ function Search({router, repos}) {
 
     const { sort, order, lang, query, page } = router.query
     console.log('lang::', router.query)
+
+    useEffect( () => {
+        if(!isServer) cacheArray(repos.items)
+    })
 
     // return <span>{ router.query.query }</span>
     return (

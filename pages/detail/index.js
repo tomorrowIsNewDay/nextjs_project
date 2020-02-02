@@ -60,13 +60,23 @@
 // }
 // 抽离公共组件 hoc
 import withRepoBasic from '../../components/with-repo-basic'
-function Detail({ text }){
-    return <span>Detail index{text}</span>
+import api from '../../lib/api'
+
+import MDRenderer from '../../components/MarkdownRenderer'
+
+function Detail({ readme }){
+    return (
+       <MDRenderer content={readme.content} isBase64={true}/>
+    )
 }
 
-Detail.getInitialProps = async() => {
+Detail.getInitialProps = async({ctx: { query: {owner, name}, req, res }}) => {
+    const readmeResp = await api.request({
+        url: `/repos/${owner}/${name}/readme`
+    }, req, res)
+
     return {
-        text: 123
+        readme: readmeResp.data
     }
 }
 
