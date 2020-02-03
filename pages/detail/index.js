@@ -62,8 +62,15 @@
 import withRepoBasic from '../../components/with-repo-basic'
 import api from '../../lib/api'
 
-import MDRenderer from '../../components/MarkdownRenderer'
+import dynamic from 'next/dynamic'
 
+// import MDRenderer from '../../components/MarkdownRenderer'
+// 动态加载
+const MDRenderer = dynamic(
+    () => import('../../components/MarkdownRenderer'),
+    {
+        loading: () => <p>Loading...</p>
+    })
 function Detail({ readme }){
     return (
        <MDRenderer content={readme.content} isBase64={true}/>
