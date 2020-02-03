@@ -106,3 +106,26 @@ ref.current = xx
 
 **oAuth**
 流程见 ./config.js
+
+**静态页面导出**
+next export
+
+**项目部署**
+1. 代码托管
+2. 服务器上clone代码
+3. pm2管理启动 
+ecosystem.config.js pm2的配置文件
+
+**总结**
+- 同构的难点： 数据同步
+getInitalProps,在服务端渲染时调用，数据存放在html中的<script id="__NEXT_DATA__">中，
+客户端首次渲染，数据直接从中获取，避免重新请求数据
+在客户端中使用数据缓存
+
+- oAuth
+第三方登录
+
+- Cookie && Session
+redis
+
+- React Hooks
