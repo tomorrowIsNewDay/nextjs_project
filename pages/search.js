@@ -11,6 +11,8 @@ import { cacheArray } from '../lib/repo-basic-cache'
 
 const isServer = typeof window === 'undefind'
 
+const SearchFakeJson = require('../json/search.json')
+
 const LANGUAGE = ['JavaScript', 'HTML', 'CSS', 'TypeScript', 'Java', 'Rust']
 const SORT_TYPES = [{
     name: 'Best Match'
@@ -80,7 +82,7 @@ const FilterLink = memo(({ name, query, lang, sort, order, page }) => {
 })
 
 function Search({router, repos}) {
-    console.log('repos::', repos)
+    // console.log('repos::', repos)
 
     const { sort, order, lang, query, page } = router.query
     console.log('lang::', router.query)
@@ -209,7 +211,8 @@ Search.getInitialProps = async ({ctx}) => {
             }
         }
     }
-    // ?q=react+language:javascript&sort&stars&order=desc&page=2
+    // ?q=react+language:javascript&sort=stars&order=desc&page=2
+    // https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
     let queryString = `?q=${query}`
     if(lang){
         queryString += `+language:${lang}`
@@ -224,7 +227,7 @@ Search.getInitialProps = async ({ctx}) => {
         url: `/search/repositories${queryString}`
     }, ctx.req, ctx.res)
     return {
-        repos: result.data || {}
+        repos: result.data || SearchFakeJson
     }
 }
 
