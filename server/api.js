@@ -6,7 +6,7 @@ module.exports = (server) => {
     server.use(async (ctx, next) => {
         const path = ctx.path
         if(path.startsWith('/github/')) {
-            console.log('ctx.request.body:::', ctx.request.body)
+            // console.log('ctx.request.body:::', ctx.request.body)
             const githubAuth = ctx.session && ctx.session.githubAuth || {}
             let headers = {}
             // 设置token

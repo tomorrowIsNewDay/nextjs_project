@@ -22,7 +22,7 @@ let cachedUserRepos, cachedUserStaredRepos
 const isServer = typeof window === 'undefined'
 
 import { useEffect } from "react"
-import axios from 'axios'
+// import axios from 'axios'
 import { Button, Icon, Tabs } from 'antd'
 import Repo from '../components/Repo'
 
