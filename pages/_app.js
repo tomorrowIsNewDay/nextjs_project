@@ -45,7 +45,7 @@ class MyApp extends App {
     // 数据获取
     static async getInitialProps(ctx) {
         const { Component } = ctx
-        console.info('MyApp app:::', Component,ctx)
+        // console.info('MyApp app:::', Component,ctx)
         let pageProps
         if(Component.getInitialProps){
             pageProps = await Component.getInitialProps(ctx)

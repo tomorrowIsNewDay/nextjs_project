@@ -19,7 +19,7 @@ export default function (Comp, type='index'){
     }
     
     function WithDetail({ repoBasic, router, ...rest }) {
-        console.log('repoBasic:::', repoBasic)
+        // console.log('repoBasic:::', repoBasic)
 
         useEffect( ()=> {
             if(!isServer) {

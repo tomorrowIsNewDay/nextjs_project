@@ -29,7 +29,7 @@ import Repo from '../components/Repo'
 import { cacheArray } from '../lib/repo-basic-cache'
 
 function Index ({ userRepos, userStaredRepos, user, router }) {
-    console.log('userRepos:::', userRepos, userStaredRepos)
+    // console.log('userRepos:::', userRepos, userStaredRepos)
 
     const tabKey = router.query.key || '1'
 
