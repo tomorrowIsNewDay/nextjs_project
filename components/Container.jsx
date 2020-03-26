@@ -12,7 +12,7 @@ const style = {
 // 抽离 布局容器组件
 // 类似render props， 此处多了 cloneElement
 export default ({renderer=<div/>, children}) => {
-
+    // cloneElement(element, [props], [...children])， 以element元素为样板克隆，返回一个新的vnode
     return cloneElement(renderer, {
         style: Object.assign({}, renderer.props.style, style),
         children

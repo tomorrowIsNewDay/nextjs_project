@@ -3,7 +3,7 @@
     此项目使用的手动创建
 - create-next-app
 > npm i -g create-next-app
-// 创建
+创建
 > npx create-next-app projectname
 > yarn create next-app projectname
 > create-next-app projectname
@@ -11,6 +11,7 @@
 #### next作为koa中间件
 - nextjs自身带有服务器，只处理ssr
 - 处理http请求，并根据请求数据返回相应的内容
+
 无法处理
 - 数据接口
 - 数据库连接
@@ -65,7 +66,7 @@ hashChangeStart
 hashChangeComplete
 
 **nextjs 数据获取**
-只有在page下的组件有效
+只有在pages 下的组件有效
 Com.getInitalProps = (ctx)=>{
     return {}
 }
@@ -129,3 +130,8 @@ getInitalProps,在服务端渲染时调用，数据存放在html中的<script id
 redis
 
 - React Hooks
+
+### 项目思维导图
+<div width="1200">
+  <img src="./nextjs.jpg"  hegiht="500" />
+</div>
