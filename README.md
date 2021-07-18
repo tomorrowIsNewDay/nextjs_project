@@ -1,4 +1,4 @@
-我是dev分支hellow_new branch
+我是dev分支hellow_new branch 1.02
 #### nextjs项目的创建
 - 手动创建
     此项目使用的手动创建
