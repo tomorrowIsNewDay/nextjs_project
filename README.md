@@ -98,7 +98,7 @@ useLayoutEffect在dom渲染前执行，useEffect在dom渲染后执行
 - useMemo
 - useCallback
 **闭包陷阱**
-当遇到延时异步的操作，使用的是触发时的状态，不一定时当前最新的状态
+当遇到延时异步的操作，使用的是触发时的状态，不一定时当前最新的状态!
 
 **规避**
  状态挂在ref上
